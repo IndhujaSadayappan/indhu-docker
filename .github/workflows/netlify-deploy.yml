@@ -10,22 +10,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout Repository
+    # 1️⃣ Checkout
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # Step 2: Login to DockerHub
+    # 2️⃣ Login to DockerHub
     - name: Login to DockerHub
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    # Step 3: Validate Image Pull (Optional Safety Check)
-    - name: Pull Docker Image
-      run: docker pull indhujavs/guvi_phase_3:latest
+    # 3️⃣ Build Docker Image
+    - name: Build Docker Image
+      run: docker build -t indhujavs/guvi_phase_3:latest .
 
-    # Step 4: SSH into EC2 and Deploy
+    # 4️⃣ Push Docker Image
+    - name: Push Docker Image
+      run: docker push indhujavs/guvi_phase_3:latest
+
+    # 5️⃣ SSH and Deploy on EC2
     - name: SSH and Deploy
       uses: appleboy/ssh-action@v1.0.3
       with:
@@ -45,7 +49,7 @@ jobs:
           
           echo "Starting new container..."
           sudo docker run -d \
-            -p 80:3000 \
+            -p 80:80 \
             --restart always \
             --name myapp \
             indhujavs/guvi_phase_3:latest
