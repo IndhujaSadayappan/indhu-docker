@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: indhujavs/guvi_phase_3
+          image: indhujavs/guvi_phase_3:latest
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
