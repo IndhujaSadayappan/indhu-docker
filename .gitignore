@@ -10,3 +10,15 @@ node_modules/
 .next/
 .env*.local
 .DS_Store
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+
+# Keep lock file
+!.terraform.lock.hcl
